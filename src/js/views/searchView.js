@@ -22,6 +22,7 @@ export const clearResults = () => {
 const limitRecipeTitle = (title, limit = 17) => {
   const newTitle = [];
   if (title.length > limit) {
+
     // We use reduce method that has a built in accumulator (like a count variable)
     title.split(" ").reduce((acc, cur) => {
       if (acc + cur.length <= limit) {
@@ -41,9 +42,7 @@ const renderRecipe = (recipe) => {
   const markup = `<li>
                     <a class="results__link" href="${recipe.recipe_id}">
                         <figure class="results__fig">
-                            <img src="${recipe.image_url}" alt="${
-    recipe.title
-  }">
+                            <img src="${recipe.image_url}" alt="${recipe.title}">
                         </figure>
                         <div class="results__data">
                             <h4 class="results__name">${limitRecipeTitle(
@@ -57,6 +56,8 @@ const renderRecipe = (recipe) => {
   //  Puts the results one below each other
   elements.searchResList.insertAdjacentHTML("beforeend", markup);
 };
+
+
 // To display the results on UI
 export const renderResults = (recipes) => {
   recipes.forEach(renderRecipe);
