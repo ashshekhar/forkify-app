@@ -19,6 +19,17 @@ export const clearResults = () => {
   elements.searchResPages.innerHTML = "";
 };
 
+export const highlightSelected = (id) => {
+  // Remove the already highlightes
+  const resultsArr = Array.from(document.querySelectorAll(".results__link"));
+  resultsArr.forEach(el => {
+    el.classList.remove('results__link--active');
+  });
+  // Highlight the selection
+  document
+    .querySelector(`a[href="#${id}"]`)
+    .classList.add("results__link--active");
+};
 // To better format the recipe text on the UI to 17 characters
 const limitRecipeTitle = (title, limit = 17) => {
   const newTitle = [];
@@ -43,10 +54,14 @@ const renderRecipe = (recipe) => {
   const markup = `<li>
                     <a class="results__link" href="#${recipe.recipe_id}">
                         <figure class="results__fig">
-                            <img src="${recipe.image_url}" alt="${recipe.title}">
+                            <img src="${recipe.image_url}" alt="${
+    recipe.title
+  }">
                         </figure>
                         <div class="results__data">
-                            <h4 class="results__name">${limitRecipeTitle(recipe.title)}
+                            <h4 class="results__name">${limitRecipeTitle(
+                              recipe.title
+                            )}
                             </h4>
                             <p class="results__author">${recipe.publisher}</p>
                         </div>
