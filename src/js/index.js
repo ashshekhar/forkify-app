@@ -49,7 +49,6 @@ elements.searchForm.addEventListener("submit", (e) => {
 
 // Adding eventListener to pagination
 elements.searchResPages.addEventListener("click", (e) => {
-  
   // To limit it to just the pagination buttons
   const btn = e.target.closest(".btn-inline");
 
@@ -73,9 +72,10 @@ const controlRecipe = async () => {
     // Create a new recipe object as a state variable
     state.recipe = new Recipe(id);
 
-    // Get recipe data
     try {
+      // Get recipe data and parse ingredients
       await state.recipe.getRecipe();
+      state.recipe.parseIngredients();
 
       // Calculate servings and time
       state.recipe.calcServings();
@@ -84,7 +84,7 @@ const controlRecipe = async () => {
       // Render the recipe
       console.log(state.recipe);
     } catch (error) {
-      alert("Error processing recipe!");
+      console.log("Error processing recipe!");
     }
   }
 };
