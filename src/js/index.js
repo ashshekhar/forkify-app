@@ -96,6 +96,29 @@ const controlRecipe = async () => {
   }
 };
 
+// Handling event listeners for pagination
 ["hashchange", "load"].forEach((event) =>
   window.addEventListener(event, controlRecipe)
 );
+
+// Handling event listeners for recipe servings + and - buttons
+elements.recipe.addEventListener("click",e=>
+{
+  if(event.target.matches(".btn-decrease, .btn-decrease *")) {
+    
+    // Decrease button clicked
+    if(state.recipe.servings > 1)
+    {
+      state.recipe.updateServings("dec");
+      recipeView.updateServingsIngredients(state.recipe);
+    }
+   
+  }
+  if(event.target.matches(".btn-increase, .btn-increase *")) {
+    
+    // Increase button clicked
+    state.recipe.updateServings("inc");
+    recipeView.updateServingsIngredients(state.recipe);
+  }
+  console.log(state.recipe);
+})
