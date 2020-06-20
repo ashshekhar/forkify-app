@@ -1,4 +1,5 @@
 import Search from "./modules/Search";
+import Recipe from "./modules/Recipe";
 import * as searchView from "./views/searchView";
 import { elements, renderLoader, clearLoader } from "./views/base";
 
@@ -8,6 +9,8 @@ import { elements, renderLoader, clearLoader } from "./views/base";
 // 3. Shopping list object
 // 4. Liked recipes
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// Search Controller
 // Our state object
 const state = {};
 
@@ -16,7 +19,7 @@ const controlSearch = async () => {
   const query = searchView.getInput();
 
   if (query) {
-    // 2. New search object and add to state
+    // 2. New search object and as a state variable
     state.search = new Search(query);
 
     // 3. Prepare UI for results
@@ -24,13 +27,17 @@ const controlSearch = async () => {
     searchView.clearResults();
     renderLoader(elements.searchRes);
 
-    // 4. Search for recipes
-    await state.search.getResults();
+    try {
+      // 4. Search for recipes
+      await state.search.getResults();
 
-    // 5. Render results to UI after awaiting for the search results
-    clearLoader();
-    console.log("hi");
-    searchView.renderResults(state.search.result);
+      // 5. Render results to UI after awaiting for the search results
+      clearLoader();
+      searchView.renderResults(state.search.result);
+    } catch {
+      alert("Something went wrong with the search...");
+      clearLoader();
+    }
   }
 };
 
@@ -42,8 +49,7 @@ elements.searchForm.addEventListener("submit", (e) => {
 
 // Adding eventListener to pagination
 elements.searchResPages.addEventListener("click", (e) => {
-  // This displays wherever you click on the UI
-  // console.log(e.target);
+  
   // To limit it to just the pagination buttons
   const btn = e.target.closest(".btn-inline");
 
@@ -53,3 +59,36 @@ elements.searchResPages.addEventListener("click", (e) => {
     searchView.renderResults(state.search.result, goToPage);
   }
 });
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Recipe Controller
+const controlRecipe = async () => {
+  // Extract the recipe ID from URL
+  const id = window.location.hash.replace("#", "");
+  console.log(id);
+
+  if (id) {
+    // Prepare UI for changes
+
+    // Create a new recipe object as a state variable
+    state.recipe = new Recipe(id);
+
+    // Get recipe data
+    try {
+      await state.recipe.getRecipe();
+
+      // Calculate servings and time
+      state.recipe.calcServings();
+      state.recipe.calcTime();
+
+      // Render the recipe
+      console.log(state.recipe);
+    } catch (error) {
+      alert("Error processing recipe!");
+    }
+  }
+};
+
+["hashchange", "load"].forEach((event) =>
+  window.addEventListener(event, controlRecipe)
+);
