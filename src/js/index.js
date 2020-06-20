@@ -16,7 +16,6 @@ const controlSearch = async () => {
   const query = searchView.getInput();
 
   if (query) {
-
     // 2. New search object and add to state
     state.search = new Search(query);
 
@@ -30,12 +29,27 @@ const controlSearch = async () => {
 
     // 5. Render results to UI after awaiting for the search results
     clearLoader();
-    console.log('hi');
-    searchView.renderResults(state.search.result); 
+    console.log("hi");
+    searchView.renderResults(state.search.result);
   }
 };
 
+// On clicking search button
 elements.searchForm.addEventListener("submit", (e) => {
   e.preventDefault();
   controlSearch();
+});
+
+// Adding eventListener to pagination
+elements.searchResPages.addEventListener("click", (e) => {
+  // This displays wherever you click on the UI
+  // console.log(e.target);
+  // To limit it to just the pagination buttons
+  const btn = e.target.closest(".btn-inline");
+
+  if (btn) {
+    const goToPage = parseInt(btn.dataset.goto, 10);
+    searchView.clearResults();
+    searchView.renderResults(state.search.result, goToPage);
+  }
 });
