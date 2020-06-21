@@ -94,7 +94,7 @@ const controlRecipe = async () => {
       clearLoader();
       recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
     } catch (error) {
-      console.log("Error processing recipe!");
+      alert("Error processing recipe!");
     }
   }
 };
