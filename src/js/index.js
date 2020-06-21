@@ -140,10 +140,6 @@ elements.shopping.addEventListener("click", (e) => {
 //////////////////////////////////////////////////////////////////////////////////////////
 // Likes Controller
 
-// Testing purpose
-state.likes = new Likes();
-likesView.toggleLikeMenu(state.likes.getNumLikes());
-
 const controlLike = () => {
   // Create a new list if there is none yet
   if (!state.likes) state.likes = new Likes();
@@ -164,7 +160,6 @@ const controlLike = () => {
 
     // Add like to UI list
     likesView.renderLike(newLike);
-    
 
     // If the recipe is already liked
   } else {
@@ -183,6 +178,20 @@ const controlLike = () => {
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
+// Restore liked recipe on page reload
+window.addEventListener("load", () => {
+  state.likes = new Likes();
+
+  // Restore likes
+  state.likes.readStorage();
+
+  // Toggle like button
+  likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+  // Render the existing likes
+  state.likes.likes.forEach((like) => likesView.renderLike(like));
+});
+
 // Handling event listeners for recipe button clicks
 elements.recipe.addEventListener("click", (e) => {
   if (event.target.matches(".btn-decrease, .btn-decrease *")) {

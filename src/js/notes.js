@@ -53,3 +53,11 @@
 //   }
 // }
 // getResults("pizza");
+
+
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// localStorage API -> An object of the window object that allows to save key value pairs (both strings) and stays there even when 
+// the page reloads. Therefore, it is easily retrievable
+
+// localStorage is basically an object where the keys become properties of that object and values become the value of that property
