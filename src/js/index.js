@@ -1,5 +1,6 @@
 import Search from "./modules/Search";
 import Recipe from "./modules/Recipe";
+import List from "./modules/List";
 import * as searchView from "./views/searchView";
 import * as recipeView from "./views/recipeView";
 import { elements, renderLoader, clearLoader } from "./views/base";
@@ -65,7 +66,6 @@ elements.searchResPages.addEventListener("click", (e) => {
 const controlRecipe = async () => {
   // Extract the recipe ID from URL
   const id = window.location.hash.replace("#", "");
-  console.log(id);
 
   if (id) {
     // Prepare UI for changes
@@ -102,23 +102,21 @@ const controlRecipe = async () => {
 );
 
 // Handling event listeners for recipe servings + and - buttons
-elements.recipe.addEventListener("click",e=>
-{
-  if(event.target.matches(".btn-decrease, .btn-decrease *")) {
-    
+elements.recipe.addEventListener("click", (e) => {
+  if (event.target.matches(".btn-decrease, .btn-decrease *")) {
     // Decrease button clicked
-    if(state.recipe.servings > 1)
-    {
+    if (state.recipe.servings > 1) {
       state.recipe.updateServings("dec");
       recipeView.updateServingsIngredients(state.recipe);
     }
-   
   }
-  if(event.target.matches(".btn-increase, .btn-increase *")) {
-    
+  if (event.target.matches(".btn-increase, .btn-increase *")) {
     // Increase button clicked
     state.recipe.updateServings("inc");
     recipeView.updateServingsIngredients(state.recipe);
   }
-  console.log(state.recipe);
-})
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Shopping List Controller
+window.l = new List();
