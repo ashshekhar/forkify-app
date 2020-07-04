@@ -4,5 +4,5 @@ A beautiful app to find recipes of your favorite dishes with the flexibilty of a
 
 ## App UI 
 
-![interface]()
+![interface](https://github.com/ashshekhar/forkify-app/blob/master/Screen%20Shot%202020-07-04%20at%209.05.12%20PM.png)
  
